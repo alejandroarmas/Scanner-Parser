@@ -121,7 +121,7 @@ impl Lexer {
         
         Lexer {
             token_vector: Vec::new(),
-            columnNumber: 0,
+            columnNumber: 1,
             rowNumber:    1,
             cstream: CharStream::new(filename)
         }
@@ -157,7 +157,7 @@ impl Lexer {
 						
 						tokenType = tokenHelper.get_next_type(&currentLexeme, self.cstream.peek_next_char());
                         
-						let token = Token::new(currentLexeme.to_string(), tokenType, self.rowNumber, self.columnNumber);
+						let token = Token::new(currentLexeme.to_string(), tokenType, self.rowNumber, self.columnNumber - currentLexeme.len());
 						self.token_vector.push(token);
 						currentLexeme.clear();
 					}
@@ -187,7 +187,7 @@ impl Lexer {
 							tokenType = TokenType::INTCONSTANT;
 						}
 
-                        let token = Token::new(currentLexeme.to_string(), tokenType, self.rowNumber, self.columnNumber);
+                        let token = Token::new(currentLexeme.to_string(), tokenType, self.rowNumber, self.columnNumber - currentLexeme.len());
                         self.token_vector.push(token);
 
 						currentLexeme.clear();
@@ -204,7 +204,7 @@ impl Lexer {
                     
 					else {
 						tokenType = TokenType::OPERATOR;
-						let token = Token::new(T.to_string(), tokenType, self.rowNumber, self.columnNumber);
+						let token = Token::new(T.to_string(), tokenType, self.rowNumber, self.columnNumber - currentLexeme.len());
 						self.token_vector.push(token);
 						self.columnNumber += 1;
 						self.cstream.get_next_char();
