@@ -2,31 +2,35 @@
 //use character_stream::*;
 
 
-// mod token;
-// use token::*;
+mod token;
+use token::*;
 
 mod reader;
 use reader::*;
 
+mod lexer;
+use lexer::*;
+
+mod parser;
+use parser::*;
+
+
+mod character_stream;
+use character_stream::*;
+
 		
 
 fn main() {
-	// let tt = TokenType::OPERATOR;
-	// let token = Token::new("+".to_string(), tt, 2, 30);
-	
+
 	let filename = "../data/example1.x";
 
-	let reader = Reader::new(filename.to_string());
+	let mut lx = Lexer::new(filename);
 
-	let program_lines = reader.vectorize_program_lines();
+	let tokens = lx.scan();
 
-	println!("> {:?}", program_lines);
-	// for (i, line) in program_lines.iter().enumerate() {
-		// 	println!("Line {}> {}",i , Ok(program_lines)).to_string();
-	// }
+	for t in tokens {
+		println!(" Lexume: {:^10} | Type: {:^14} | Position:({:4}, {:2})", t.get_text(), t.get_type().as_str(), t.get_char_pos(), t.get_line_number());
+	}
+	
 
-	// println!("text: {}", token.get_text());
-	// println!("token type: {}", token.get_type().as_str());
-	// println!("line numer: {}", token.get_line_number());
-	// println!("char position: {}", token.get_char_pos());
 }
