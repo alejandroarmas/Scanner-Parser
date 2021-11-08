@@ -25,16 +25,16 @@ impl TokenType {
 }
 
 
-
 pub struct Token {
     text: String,
     token_type: TokenType,
-    line_number: i32,
-    char_position: i32 
+    line_number: usize,
+    char_position: usize 
 }
 
+
 impl Token {
-    pub fn new(s: String, t: TokenType, linenum: i32, charpos: i32) -> Token {
+    pub fn new(s: String, t: TokenType, linenum: usize, charpos: usize) -> Token {
         Token {
             text: s,
             token_type: t,
@@ -51,11 +51,11 @@ impl Token {
         &self.token_type
     }   
 
-    pub fn get_line_number(&self) -> i32 {
+    pub fn get_line_number(&self) -> usize {
         self.line_number
     }   
 
-    pub fn get_char_pos(&self) -> i32 {
+    pub fn get_char_pos(&self) -> usize {
         self.char_position
     }   
 }
