@@ -35,17 +35,17 @@ impl <R: Read> Lines<R> {
 
 pub struct Reader {
 	program_file_name: String,
-	source_code_lines: Vec<String>
+	source_code_lines: String
 }
 
 
 impl Reader {
 	
-	pub fn new(file_name: String) -> Reader {
-		Reader{program_file_name : file_name, source_code_lines: Vec::default()}
+	pub fn new(file_name: &str) -> Reader {
+		Reader{program_file_name : file_name.to_string(), source_code_lines: String::default()}
 	}
 
-	pub fn vectorize_program_lines(mut self) -> io::Result<Vec<String>> {
+	pub fn get_program_source(mut self) -> io::Result<String> {
 
 		self.source_code_lines.clear();
 
@@ -55,7 +55,8 @@ impl Reader {
 
 		while let Some(line) = lines.next() {
 			let line = line?;
-			self.source_code_lines.push(line.to_string());
+			self.source_code_lines.push_str(&line.to_string());
+			self.source_code_lines.push_str("\n");
 			// println!("{}", line);
 		}
 	
